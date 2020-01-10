@@ -300,10 +300,10 @@ class MyGame(object):
             temp_rock = Rock((rand_x, rand_y), size)
 
         else:
-            # a position was given through arguments
+            
             temp_rock = Rock(pos, size)
 
-        # add the recently created rock the the actual rocks list
+        
         self.rocks.append(temp_rock)
 
 
@@ -312,10 +312,10 @@ class MyGame(object):
         self.spaceship = Spaceship((self.width//2, self.height//2))
         self.missiles = []
 
-        # start the sound track loop
+       
         self.soundtrack.play(-1, 0, 1000)
 
-        # set the state to PLAYING
+       
         self.state = MyGame.PLAYING
 
 
@@ -532,62 +532,61 @@ class MyGame(object):
         
         self.screen.fill(self.bg_color)
 
-        # if we are not on the welcome screen
+       
         if self.state != MyGame.WELCOME:
 
-            # draw the spaceship
+            
             self.spaceship.draw_on(self.screen)
 
-            # if there are any active missiles draw them
+            
             if len(self.spaceship.active_missiles) >  0:
                 for missile in self.spaceship.active_missiles:
                     missile.draw_on(self.screen)
 
-            # draw the rocks
+            
             if len(self.rocks) >  0:
                 for rock in self.rocks:
                     rock.draw_on(self.screen)
 
-            # if we are in game play mode
+           
             if self.state == MyGame.PLAYING:
 
-                # increment the counter by 1
+               
                 self.counter += 1
 
                 if self.counter == 20*self.FPS:
-                # time to increase difficulty (20 secs without dying)
+               
 
-                    if len(self.rocks) < 15:  # keeping it sane
-                        # add a new rock
+                    if len(self.rocks) < 15: 
                         self.make_rock()
 
-                    # decrease the minimum rock creation distance
+                    
                     if self.min_rock_distance < 200:
                         self.min_rock_distance -= 50
 
-                    # set the counter back to zero
+                    
                     self.counter = 0
 
-            # create and display the text for score
+           
             scores_text = self.medium_font.render(str(self.score),\
                                                     True, (0, 155, 0))
             draw_centered(scores_text, self.screen,\
                 (self.width-scores_text.get_width(), scores_text.get_height()+\
                                                         10))
 
-            # if the game is over, display the game over text
+            
             if self.state == MyGame.GAME_OVER or self.state == MyGame.STARTING:
                 draw_centered(self.gameover_text, self.screen,\
                                 (self.width//2, self.height//2))
 
-            # draw lives
+            
             for i in range(self.lives):
                 draw_centered(self.lives_image, self.screen,\
                     (self.lives_image.get_width()*i*1.2+40,\
                         self.lives_image.get_height()//2))
 
         else:
-            # draw the welcome texts
+            
             draw_centered(self.welcome_asteroids, self.screen,\
                 (self.width//2, self.height//2\
                     -self.welcome_asteroids.get_height()))
@@ -596,7 +595,7 @@ class MyGame(object):
                 (self.width//2, self.height//2\
                     +self.welcome_desc.get_height()))
 
-        # flip buffers so that everything we have drawn gets displayed
+        
         pygame.display.flip()
 
 
@@ -605,4 +604,3 @@ pygame.quit()
 sys.exit()
 
 
-# Sounds tracks from http://soundbible.com
