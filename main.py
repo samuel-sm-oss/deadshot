@@ -11,38 +11,38 @@ import pygame
 
 
 def load_image_convert_alpha(filename):
-    """Load an image with the given filename from the images directory"""
+    
     return pygame.image.load(os.path.join('images', filename)).convert_alpha()
 
 
 def load_sound(filename):
-    """Load a sound with the given filename from the sounds directory"""
+   
     return pygame.mixer.Sound(os.path.join('sounds', filename))
 
 
 def draw_centered(surface1, surface2, position):
-    """Draw surface1 onto surface2 with center at position"""
+    
     rect = surface1.get_rect()
     rect = rect.move(position[0]-rect.width//2, position[1]-rect.height//2)
     surface2.blit(surface1, rect)
 
 
 def rotate_center(image, rect, angle):
-        """rotate the given image around its center & return an image & rect"""
+       
         rotate_image = pygame.transform.rotate(image, angle)
         rotate_rect = rotate_image.get_rect(center=rect.center)
         return rotate_image,rotate_rect
 
 
 def distance(p, q):
-    """Helper function to calculate distance between 2 points"""
+    
     return math.sqrt((p[0]-q[0])**2 + (p[1]-q[1])**2)
 
 
 
 
 class GameObject(object):
-    """All game objects have a position and an image"""
+    
     def __init__(self, position, image, speed=0):
      
         self.image = image
@@ -61,7 +61,7 @@ class GameObject(object):
 
 class Spaceship(GameObject):
     def __init__(self, position):
-        """initializing an Spaceship object given it's position"""
+       
         super(Spaceship, self).__init__(position,\
             load_image_convert_alpha('spaceship-off.png'))
 
@@ -74,7 +74,7 @@ class Spaceship(GameObject):
         self.active_missiles = []
 
     def draw_on(self, screen):
-        """Draw the spaceship on the screen"""
+        
 
       
         if self.is_throttle_on:
@@ -88,7 +88,7 @@ class Spaceship(GameObject):
 
 
     def move(self):
-        """Do one frame's worth of updating for the object"""
+        
 
         
         self.direction[0] = math.sin(-math.radians(self.angle))
@@ -100,7 +100,7 @@ class Spaceship(GameObject):
 
 
     def fire(self):
-        """create a new Missile and fire it!!"""
+        
 
        
         adjust = [0, 0]
@@ -116,7 +116,7 @@ class Spaceship(GameObject):
 
 
 class Missile(GameObject):
-    """Resembles a missile"""
+    
     def __init__(self, position, angle, speed=15):
         super(Missile, self).__init__(position,\
             load_image_convert_alpha('missile.png'))
@@ -127,7 +127,7 @@ class Missile(GameObject):
 
 
     def move(self):
-        """Move the missile towards its destination"""
+        
 
        
         self.direction[0] = math.sin(-math.radians(self.angle))
@@ -140,9 +140,9 @@ class Missile(GameObject):
 
 
 class Rock(GameObject):
-    """Resembles a rock"""
+    
     def __init__(self, position, size, speed=4):
-        """Initialize a Rock object, given its position and size"""
+       
 
       
         if size in {"big", "normal", "small"}:
@@ -176,8 +176,7 @@ class Rock(GameObject):
 
 
     def move(self):
-        """Move the rock"""
-
+       
         self.position[0] += self.direction[0]*self.speed
         self.position[1] += self.direction[1]*self.speed
 
@@ -192,7 +191,7 @@ class MyGame(object):
     REFRESH, START, RESTART = range(pygame.USEREVENT, pygame.USEREVENT+3)
 
     def __init__(self):
-        """Initialize a new game"""
+        
         pygame.mixer.init()
         pygame.mixer.pre_init(44100, -16, 2, 2048)
         pygame.init()
@@ -240,7 +239,7 @@ class MyGame(object):
 
 
     def do_welcome(self):
-        """make a welcome screen"""
+        
 
         
         self.state = MyGame.WELCOME
@@ -253,8 +252,7 @@ class MyGame(object):
 
 
     def do_init(self):
-        """This function is called in the beginning or when
-        the game is restarted."""
+        
 
        
         self.rocks = []
@@ -278,7 +276,7 @@ class MyGame(object):
 
 
     def make_rock(self, size="big", pos=None):
-        """Make a new rock"""
+        
 
         
         margin = 200
@@ -308,7 +306,7 @@ class MyGame(object):
 
 
     def start(self):
-        """Start the game by creating the spaceship object"""
+       
         self.spaceship = Spaceship((self.width//2, self.height//2))
         self.missiles = []
 
@@ -320,7 +318,7 @@ class MyGame(object):
 
 
     def run(self):
-        """Loop forever processing events"""
+       
         running = True
         while running:
             event = pygame.event.wait()
@@ -503,8 +501,7 @@ class MyGame(object):
 
 
     def rocks_physics(self):
-        """Move the rocks if there are any"""
-
+        
         
         if len(self.rocks) > 0:
 
@@ -528,7 +525,7 @@ class MyGame(object):
 
 
     def draw(self):
-        """Update the display"""
+       
         
         self.screen.fill(self.bg_color)
 
